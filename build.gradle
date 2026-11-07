@@ -1,0 +1,45 @@
+plugins {
+    id 'base'
+    id 'idea'
+    id 'net.neoforged.moddev' version '2.0.148' apply false
+    id 'net.neoforged.moddev.legacyforge' version '2.0.148' apply false
+}
+
+allprojects {
+    group = 'yagen.waitmydawn.mkb_export'
+    version = '0.16.4'
+    repositories {
+        if (providers.gradleProperty('neoForgeMaven').isPresent()) {
+            maven {
+                name = 'NeoForgeMirror'
+                url = providers.gradleProperty('neoForgeMaven').get()
+                content { includeGroupByRegex 'net\\.neoforged(\\..*)?' }
+            }
+        }
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: 'java-library'
+    apply plugin: 'idea'
+    java { withSourcesJar() }
+    tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+    tasks.withType(ProcessResources).configureEach { filteringCharset = 'UTF-8' }
+    tasks.withType(Test).configureEach { useJUnitPlatform() }
+    tasks.withType(AbstractArchiveTask).configureEach {
+        preserveFileTimestamps = false
+        reproducibleFileOrder = true
+    }
+    tasks.withType(Jar).configureEach { from(rootProject.file('LICENSE')) { rename { 'LICENSE_mkb_export' } } }
+}
+
+tasks.register('assembleRelease', Sync) {
+    dependsOn ':common:check', ':neoforge-1.21.1:build', ':forge-1.20.1:build'
+    into layout.buildDirectory.dir('release')
+    from(project(':neoforge-1.21.1').layout.buildDirectory.dir('libs')) { include "mkb_export-neoforge-1.21.1-${project.version}.jar" }
+    from(project(':forge-1.20.1').layout.buildDirectory.dir('libs')) { include "mkb_export-forge-1.20.1-${project.version}.jar" }
+}
+
+tasks.named('check') { dependsOn subprojects.collect { it.tasks.named('check') } }
+tasks.named('assemble') { dependsOn subprojects.collect { it.tasks.named('assemble') } }

@@ -1,0 +1,62 @@
+# Gradle
+.gradle/
+build/
+**/build/
+
+# IntelliJ IDEA / Eclipse / VS Code
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.fleet/
+.settings/
+.classpath
+.project
+.factorypath
+out/
+bin/
+*.class
+
+# Local environment and secrets
+local.properties
+.env
+.env.*
+!.env.example
+docs/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs, crash dumps and profiler output
+*.log
+logs/
+**/logs/
+crash-reports/
+*.hprof
+hs_err_pid*
+replay_pid*
+
+# Game run directories
+**/run/
+**/runs/
+
+# Exported snapshots and resumable checkpoints
+**/MKB-Export/
+**/MKB-Export-*/
+**/.mkb-export-*/
+
+# Editor / temporary files
+*.tmp
+*.bak
+*.swp
+*~
+
+# JARs are build artifacts; keep only the Gradle wrapper
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+
+# Keep wrapper metadata
+!gradle/wrapper/gradle-wrapper.properties

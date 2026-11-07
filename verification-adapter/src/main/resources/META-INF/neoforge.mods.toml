@@ -1,0 +1,14 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+[[mods]]
+modId="mkb_export_example"
+version="1.0"
+displayName="MKB Appearance Adapter Verification"
+
+[[dependencies.mkb_export_example]]
+modId="mkb_export"
+type="required"
+versionRange="[0.9.0,)"
+ordering="AFTER"
+side="CLIENT"

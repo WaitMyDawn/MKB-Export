@@ -1,0 +1,9 @@
+package yagen.waitmydawn.mkb_export.client;
+import com.google.gson.*;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.server.MinecraftServer;
+/** Registry metadata is captured without executing effect ticks or random enchantment selection. */
+final class MagicKnowledge {
+    static JsonArray potions(MinecraftServer server){var rows=new JsonArray();for(var potion:BuiltInRegistries.POTION){String id=BuiltInRegistries.POTION.getKey(potion).toString();try{var row=new JsonObject();row.addProperty("id",id);row.add("effects",Platform.potionEffects(potion));row.addProperty("limitation","Declared base potion; custom stack effects, delivery scaling and runtime hooks are separate");rows.add(row);}catch(Exception e){rows.add(ServerKnowledgeCapture.failure(id,e));}}return rows;}
+    static JsonArray effects(MinecraftServer server){var rows=new JsonArray();for(var effect:BuiltInRegistries.MOB_EFFECT){String id=BuiltInRegistries.MOB_EFFECT.getKey(effect).toString();try{var row=new JsonObject();row.addProperty("id",id);row.addProperty("descriptionId",effect.getDescriptionId());row.addProperty("name",effect.getDisplayName().getString());row.addProperty("category",effect.getCategory().toString());row.addProperty("color",effect.getColor());row.addProperty("instantaneous",effect.isInstantenous());row.addProperty("amplifierBase",0);try{row.add("attributeModifiers",Platform.effectModifiers(effect));row.addProperty("modifierSampleMaxAmplifier",4);}catch(Exception unavailable){row.addProperty("modifierFailure",EntitySamples.describe(unavailable));}row.addProperty("limitation","Effect tick logic and contextual damage/healing are executable code; duration is specified by each effect instance, not this registry entry");rows.add(row);}catch(Exception e){rows.add(ServerKnowledgeCapture.failure(id,e));}}return rows;}
+}

@@ -1,0 +1,25 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+
+[[mods]]
+modId="mkb_export"
+version="${version}"
+displayName="MKB Export"
+authors="Yagen"
+displayTest="IGNORE_ALL_VERSION"
+description='''Export Minecraft GUI item renders as transparent PNGs and an MKB-Export v1 manifest.'''
+
+[[dependencies.mkb_export]]
+modId="forge"
+mandatory=true
+versionRange="[47.3.22,48)"
+ordering="NONE"
+side="CLIENT"
+
+[[dependencies.mkb_export]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1]"
+ordering="NONE"
+side="CLIENT"

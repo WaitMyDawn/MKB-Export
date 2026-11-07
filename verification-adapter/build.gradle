@@ -1,0 +1,4 @@
+plugins { id 'java-library' }
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+dependencies { compileOnly files(project(':neoforge-1.21.1').sourceSets.main.output, project(':neoforge-1.21.1').sourceSets.main.compileClasspath) }
+tasks.named('compileJava') { dependsOn ':neoforge-1.21.1:classes' }

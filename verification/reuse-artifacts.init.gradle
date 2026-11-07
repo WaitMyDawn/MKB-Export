@@ -1,0 +1,16 @@
+// 仅供已生成同版本开发产物、但官方 Maven 暂时不可达的本机验收。
+// 正常开发与 CI 不应加载此脚本。
+gradle.projectsEvaluated {
+    rootProject.subprojects.each { project ->
+        project.tasks.matching { it.name == 'createMinecraftArtifacts' }.configureEach {
+            onlyIf {
+                def version = project.name == 'neoforge-1.21.1' ? 'neoforge-21.1.265' : 'forge-1.20.1-47.3.22'
+                def artifacts = project.layout.buildDirectory.dir('moddev/artifacts').get().asFile
+                if (!new File(artifacts, "${version}.jar").isFile() || !new File(artifacts, "${version}-sources.jar").isFile()) {
+                    throw new GradleException('Exact-version Minecraft artifacts must be generated before using this verification script')
+                }
+                false
+            }
+        }
+    }
+}

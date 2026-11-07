@@ -1,0 +1,1 @@
+{"required":true,"minVersion":"0.8","package":"yagen.waitmydawn.mkb_export.mixin","compatibilityLevel":"JAVA_17","mixins":["LevelAttributeTickMixin"],"injectors":{"defaultRequire":1}}
